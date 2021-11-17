@@ -1,0 +1,152 @@
+$red_color: #840032;
+$blue_color: #002642;
+$yellow_color: #E59500;
+$white_color: #fcfcfc;
+$black_color: #02040F;
+$blue_hover: #001e33;
+$yellow_hover: #ce8703;
+
+body { 
+  background-color: $white_color !important; 
+  color: $black_color !important;
+}
+
+.bg_red {
+  color: $white_color;
+  background-color: $red_color !important;
+  border-color: $red_color !important;
+}
+
+.red_hover:hover {
+  color: $white_color;
+  background-color: $blue_color !important;
+  border-color: $blue_color !important;
+}
+.white_text {
+  color: $white_color !important;
+}
+
+.bg_blue {
+  div {
+    color: $white_color;
+    background-color: $blue_color;
+  }
+  table
+    th, td {
+      color: $white_color !important;
+      background-color: rgba($white_color, 0) !important;
+    }
+  a {
+    color: $white_color !important;
+    background-color: rgba($white_color, 0);
+  }
+}
+
+.bg_blue:hover {
+  div {
+    background-color: $red_color;
+  }
+  a:hover {
+    color: $white_color !important;
+    background-color: rgba($white_color, 0);
+  }
+}
+
+.historical_booking {
+  background-color: rgb(199, 199, 199) !important;
+  color: white !important;
+}
+
+.historical_booking:hover {
+  background-color: rgb(179, 179, 179) !important;
+}
+
+#dropdown_menu {
+  background-color: $red_color !important;
+}
+.dropdown-item, .dropdown-divider {
+  color: $white_color !important;
+}
+.dropdown-item:focus, .dropdown-item:hover {
+  color: $white_color;
+  background-color: $blue_color !important;
+}
+
+.yellow {
+  background-color: $yellow_color !important;
+  border-color: $yellow_color !important;
+  color: $white_color !important;
+} 
+.yellow:hover, .yellow:focus {
+  background-color: $yellow_hover !important;
+  border-color: $yellow_hover !important;
+  box-shadow: 0 0 0 0.25rem rgba($yellow_hover, 0.7)
+}
+
+.car_image {
+  max-height:250px;
+  max-width: 85%;
+  border-radius: 15px;
+}
+.map_img {
+  width: 100%;
+  max-width: 350px;
+  max-height: 100%;
+}
+
+#search_form {
+  background-size: 100%;
+}
+
+@media (min-width: 600px) {
+  #bonuses {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    -webkit-column-gap: 3em;
+    -moz-column-gap: 3em;
+    column-gap: 3em;
+  }
+}
+
+@media (max-width: 600px) {
+  #bonuses {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+    -webkit-column-gap: 3em;
+    -moz-column-gap: 3em;
+    column-gap: 3em;
+  }
+}
+
+#header_image {
+  background-image: url('/static/carhire/images/london5.jpg'); 
+  background-size: cover; 
+  height: 23%;
+}
+
+.icon {
+  width: 25px;
+  height: auto;
+}
+
+.linebrk {
+  white-space: pre-line;
+}
+
+#login_close {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.thumbnail {
+  max-height:100px;
+  max-width: 85%;
+  border-radius: 5px;
+}
+
+a {
+  cursor: pointer;
+}

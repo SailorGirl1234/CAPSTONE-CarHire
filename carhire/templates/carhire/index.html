@@ -1,0 +1,133 @@
+{% extends "carhire/layout.html" %}
+{% load static %}
+
+{% block pre-body%}
+<div id="messages" class="container-fluid"></div>
+{% endblock %}
+
+{% block body %}
+<div class="container" id="login-view"> 
+    {% if not user.is_authenticated %}  
+    <div class="row justify-content-end mb-1">
+        <button type="button" class="btn-close btn-sm" id="login_close" onclick="hide_login_section()"></button>
+    </div>   
+    <div class="row justify-content-evenly">
+        <div class="col-12 col-sm-5 shadow-sm p-3 mb-5 bg-body rounded">
+            <h3>Login</h3>
+            <form action="javascript:" id="login_form" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input autofocus class="form-control" type="text" name="username" id="username_login" placeholder="Username" autocomplete="username"/>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="password" id="password_login" placeholder="Password" autocomplete="current-password"/>
+                </div>
+                <div class="mb-3">
+                    <input class="btn red_hover bg_red" type="submit" value="Login"/>
+                </div> 
+            </form>
+            <div class="d-sm-block d-none">
+                <h4>New Capstone customer?</h4>
+                Create your personal Capstone account and you'll only have to give us your details once, meaning less paperwork and a faster pick-up.    
+            </div>
+        </div>
+        <div class="col-12 col-sm-5 shadow-sm p-3 mb-5 bg-body rounded">
+            <div class="d-sm-none d-block">
+                <h4>New Capstone customer?</h4>
+                Create your personal Capstone account and you'll only have to give us your details once, meaning less paperwork and a faster pick-up. 
+                <hr>   
+            </div>
+            <h3>Register</h3>
+            <form action="javascript:" id="register_form" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="username" placeholder="Username" autocomplete="username"/>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="email" name="email" placeholder="Email Address" autocomplete="email"/>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="password" placeholder="Password" autocomplete="new-password"/>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" autocomplete="new-password"/>
+                </div>
+                <input class="btn btn-danger bg_red red_hover" type="submit" value="Register"/>
+            </form>
+        </div>
+    </div>
+    
+    {% endif %}
+</div>
+
+<div class="container" id="update_user">
+    {% if user.is_authenticated %}  
+    <form action="javascript:" method="post" id="update_user_form">
+        {% csrf_token %}
+        <div class="row justify-content-evenly">
+            <h4>Required <sup style="color: red;">*</sup></h4>
+            <div class="col-12 col-sm-5">
+                <div class="mb-3">
+                    <label for="username" class="form-label"><strong>Current username </strong><sup style="color: red;">*</sup></label>
+                    <input class="form-control" type="text" name="username" id="current_username" value="{{user.username}}" autocomplete="username" disabled required/>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5">
+                <div class="mb-3">
+                    <label for="password" class="form-label"><strong>Current password </strong><sup style="color: red;">*</sup></label>
+                    <input class="form-control" type="password" name="password" id="current_password" placeholder="Current password" autofill="off" autocomplete="current-password" required/>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-evenly">
+            <h4>Optional</h4>
+            <div class="col-12 col-sm-5 mb-3">
+                <div class="mb-3">
+                    <label for="name" class="form-label">First name</label>
+                    <input class="form-control" type="text" name="first-name" placeholder="First name" value="{{user.first_name}}" autocomplete="given-name"/>
+                </div>
+                <div class="mb-3">
+                    <label for="surname" class="form-label">Last name</label>
+                    <input class="form-control" type="text" name="surname" placeholder="Last name" value="{{user.last_name}}" autocomplete="family-name"/>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5">
+                <div class="mb-3">
+                    <label for="new-password" class="form-label">New password</label>
+                    <input class="form-control" type="password" name="new-password" id="new_password" placeholder="New password" autocomplete="new-password"/>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm password</label>
+                    <input class="form-control" type="password" name="confirm-password" id="confirm_password" placeholder="Confirm password" autocomplete="new-password"/>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-evenly">
+            <div class="col-12 col-sm-5">    
+                <div class="mb-3">
+                    <label for="new-username" class="form-label">New username</label>
+                    <input class="form-control" type="text" name="new-username" id="new_username" placeholder="New username" autocomplete="username" value=""/>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5">    
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input class="form-control" type="email" name="email" value="{{user.email}}" autocomplete="email"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <input class="btn red_hover bg_red " type="submit" value="Update"/>
+        </div> 
+    </form>
+    {% endif %}
+</div>
+
+<div id="main-section"></div>
+<div id="select_car">
+    <div id="search_summary"></div>
+    <div id="search-results"></div>
+</div>
+
+{% endblock %}

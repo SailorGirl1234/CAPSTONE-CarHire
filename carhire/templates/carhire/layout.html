@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Capstone E-Car Hire</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap 5-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"> 
+        <!-- Stylesheet and favicon -->       
+        <link href="{% static 'carhire/style.css' %}" rel="stylesheet">
+        <link rel="shortcut icon" type="image/png" href="{% static 'carhire/favicon.ico' %}"/>
+        <!-- JSX / Babel -->
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    </head>
+    <body>
+        <div class="body_color">
+            <!-- Navbar-->
+            <nav class="navbar navbar-expand-sm navbar-dark bg_red">
+                <div class="container-fluid px-3">
+                    <!-- Brand -->
+                    <a class="navbar-brand" href="{% url 'index' %}" alt="capstone">
+                        <img src="{% static 'carhire/images/logo2.png' %}" alt="" width="22" height="auto" class="d-inline-block align-top"/>
+                        <span  class="h5 fw-light">apstone</span>
+                    </a>
+                    <!-- Toggler/collapsibe Button -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarList" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between"" id="navBarList">
+                        <div class="navbar-nav">
+                            <a class="nav-link active" id="home-link" href="javascript:" onclick="index_page()">Home</a>
+                            <a class="nav-link" id="e-cars-link" href="javascript:" onclick="all_cars()">E-Cars</a>
+                            <!-- Location dropdown menu -->
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Locations
+                                </a>
+                                <ul class="dropdown-menu" id="dropdown_menu" aria-labelledby="navbarDropdown">
+                                    {% for location in locations %}
+                                    <li><a class="dropdown-item" href="javascript:" onclick="show_locations('{{location.code}}')" id="location-{{location.code}}">London {{location.site}}</a></li>
+                                    {% endfor %}
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="javascript:" onclick="show_locations('all')" id="location-all">All locations</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                            {% if user.is_authenticated %}
+                            <div class="d-flex navbar-nav">
+                                <a class="nav-link" id="username_profile" href="javascript:" onclick="profile_page()" style="color: white;">{{user.username}}</a>
+                                <a href="javascript:" id="profile-button" onclick="profile_page()">
+                                <img src="{% static 'carhire/images/profile-logo.png' %}" alt="profile" width="30" height="30" class="d-inline-block align-text-top ms-2 me-4"/>
+                            </a>
+                            <div>
+                                <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm align-text-top" role="button">Log Out</a>
+                            </div>
+                            {% else %}
+                            <a href="javascript:" onclick="show_login_section()" class="btn btn-outline-light btn-sm" role="button">Login | Register</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {% block pre-body%}
+            {% endblock %}
+            
+            <!--Show search form if locations dict is passed-->
+            {% if locations %}
+            <div id="search-form" class="container-fluid">
+                <div id="header_image"  class="my-2 pb-lg-2">
+                    <div class="py-sm-2">   
+                        <div class="col-11 mx-auto my-2 pt-4 ">
+                            <h1 class="display-2 text-center white_text">Book an e-car now</h1>
+                        </div>
+                        <form action="javascript:" id="search_form" method="post">
+                            <div class="row row-cols-lg-auto g-2 align-items-center py-4 mb-4 d-flex justify-content-center">
+                                <div class="col-11 col-md-3 me-md-4 mb-2 mb-sm-0">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="location-lable"><strong>Location</strong></span>
+                                        <select id="location" name="location" class="form-select form-control">
+                                            <option selected disabled value="">Select location</option>
+                                            {% for location in locations %}
+                                            <option value="{{ location.code }}">{{ location.site }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-11">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="from-label" style="width: 60px;"><strong>From</strong></span>
+                                        <input type="datetime-local" onchange="updateDropoff()" name="date-from" id="pickup" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-11 me-md-2 me-lg-4 mb-2 mb-sm-0">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="to-lable" style="width: 60px;"><strong>To</strong></span>
+                                        <input type="datetime-local" onchange="updatePickup()" name="date-to" id="dropoff" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 col-11 bg_blue d-flex justify-content-center">
+                                    <input id="search" class="btn btn-warning bg_blue yellow mb-2" type="button" value="Search">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif%}
+
+            
+            <div class="body m-4 ">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- React -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+        <!-- App js/react -->
+        <script src="{% static 'carhire/react/error_message.js' %}"></script>
+        <script src="{% static 'carhire/react/profile.js' %}"></script>
+        <script src="{% static 'carhire/react/book_car.js' %}"></script>
+        <script src="{% static 'carhire/react/select_car.js' %}"></script>
+        <script src="{% static 'carhire/react/search.js' %}"></script>
+        <script src="{% static 'carhire/react/all_locations.js' %}"></script>
+        <script src="{% static 'carhire/react/e-cars.js' %}"></script>
+        <script src="{% static 'carhire/react/login.js' %}"></script>
+        <script src="{% static 'carhire/react/index.js' %}"></script>
+        <script src="{% static 'carhire/react/history.js' %}"></script>
+        <script src="{% static 'carhire/react/login.js' %}"></script>
+        <script src="{% static 'carhire/react/home.js' %}"></script>
+
+    </body>
+</html>
