@@ -7,7 +7,7 @@
 **CAPSTONE E-Car Hire**
 is a car hire booking system, that checks the availability and handles the booking of cars within a fleet, distributed across several locations.
 
-It is a single page, responsive web app, designed using React/Javascript alongside AJAX requests sent to the Django back end, so that the page is dynamically updated and only reloads when necessary
+It is a single page, responsive web app, designed using React/Javascript alongside AJAX requests sent to the Django back end, so that the page is dynamically updated and only reloads when necessary.
 
 All requests except logout are made using AJAX fetch requests, with POST requests having the csrf token added to the request header to improve cross site request forgery protection.
 
