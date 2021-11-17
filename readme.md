@@ -4,8 +4,14 @@
 
 ## **Description**
 
-**CAPSTONE E-Car Hire** is a single page responsive web app, designed using React/Javascript front end and Django back end.
-It is a car hire booking system, that checks the availability and handles the booking of cars within a fleet, distributed across several locations.
+**CAPSTONE E-Car Hire** 
+is a car hire booking system, that checks the availability and handles the booking of cars within a fleet, distributed across several locations.
+
+It is a single page, responsive web app, designed using React/Javascript alongside AJAX requests sent to the Django back end, so that the page is dynamically updated and only reloads when necessary
+
+All requests except logout are made using AJAX fetch requests, with POST requests having the csrf token added to the request header to improve cross site request forgery protection.
+
+The Javascript History Api is used to update the URL and stateObj using pushstate and onpopstate which is configured to reload sections when using the back and forward buttons.
 
 ### **Technologies used:**
 
@@ -20,6 +26,7 @@ To build the web app I used the following languages, frameworks and libraries:
 * SASS
 * SQLite Database
 
+
 ### **Using the web app**
 
 #### **Home**
@@ -30,9 +37,13 @@ This takes you to the main landing page, with cards linking to the "e-cars" and 
 
 Clicking on the E-cars tab in the nav bar shows a list of all the available car types, along with details including their range, charging times and size. This list can be sorted by various options including price, range and charging time.
 
+![gif1](https://user-images.githubusercontent.com/78767736/142284850-7ee06a54-aa12-446b-a424-1f64707ca3e8.gif)
+
 #### **Locations**
 
 Using the dropdown menu, you can access information about each car hire site, or a brief summary of all of the sites.
+
+![capstone3](https://user-images.githubusercontent.com/78767736/142209504-dffd9752-9d3a-425b-bee3-707a1fd0b5d4.gif)
 
 #### **Login/Register**
 
@@ -40,10 +51,13 @@ The login/register button in the nav bar shows the login/register section above 
 
 #### **Search bar**
 
+
 The search bar can be used from all sections of the web app.
 The location is selected from a dropdown of available locations. While the "To" and "From" date-times are set using date pickers.
 The min and max values for the "To" and "From" fields are dynamically updated using javascript, with the minimum pickup time being set to tomorrow 08:00.
 Clicking the "Search" button will initiate the booking query.
+
+![capstone](https://user-images.githubusercontent.com/78767736/142209104-15c05be9-8cc7-47a2-b274-7d4224086857.gif)
 
 #### **Search results**
 
@@ -75,29 +89,50 @@ It has a button which shows a section where you can update your details, as well
 From the profile page, you can choose to update your details.
 This includes a form where you can change your password, update your email and username, as well as add your first and last name.
 
-## **Distinctiveness and Complexity**
+## **How to run the application**
 
-### **Distinctiveness**
+Clone the project
 
-This project is distinct from the other projects on this course as it builds and utilises a booking system that manages a set of resources (cars) over time. Only showing and allowing a user to book a selected car if a car of that type is available at the specified location for the full duration of the booking.
+    git clone https://github.com/SailorGirl1234/CAPSTONE-CarHire.git
 
-### **Complexity**
+Create and start a a virtual environment
 
-This project is designed as a single page web application, using react alongside AJAX requests sent to the Django back end, so that the page is dynamically updated and only reloads when necessary - after a login or logout.
+    virtualenv env --no-site-packages
+    source env/bin/activate
+    
+Install the project dependencies:
 
-The project uses 6 models with 3 of the models referencing at least one other.
+    pip install -r requirements.txt
 
-All requests except logout are made using AJAX fetch requests, with POST requests having the csrf token added to the request header to improve cross site request forgery protection.
+Run using python3 in your terminal:
+    
+    from django.core.management.utils import get_random_secret_key
+    SECRET_KEY = get_random_secret_key()
+    print(SECRET_KEY)
 
-The built in Django authentication and user models are used more thoroughly with validations completed on all fields before saving, as well as implementation of an update password and details form.
+Create a new file called "local_settings.py" in /capstone.
+Create a constant with the value of your secret key:
+    
+    DJANGO_SECRET_KEY = 'django-insecure-*YOUR SECRET KEY*'
 
-The Javascript History Api is used to update the URL and stateObj using pushstate and onpopstate which is configured to reload sections when using the back and forward buttons.
+From the root directory run:
+
+    python3 manage.py makemigrations
+    python3 manage.py migrate
+
+The application can be run on Django's development server using:
+    
+    python3 manage.py runserver
+
+### **Additional information**
+
+The database has been populated with 3 locations, 12 car types and 24 cars (one of each type at 2 locations). One location was intentionally left without any cars assigned to simulate no cars being available.
 
 ## **What is contained in each file**
 
-### **models.py**
+### **[models.py](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/models.py)**
 
-Models.py contains models including:
+models.py contains models including:
 
 #### **Abstract User**
 
@@ -130,7 +165,7 @@ Details about the location including Char, Text, URL and Float fields.
 * To and from hours
 * Meta to define ordering and unique together
 
-### **views.py**
+### **[views.py](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/views.py)**
 
 views.py contains views including:
 
@@ -210,7 +245,7 @@ Returns a list of all bookings made by the user and the user's details.
 
 Login required for AJAX GET request. Deletes booking using booking id from URL parameter.
 
-### **helpers.py**
+### **[helpers.py](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/helpers.py)**
 
 helpers.py contains helper functions to streamline repeated calculations and requests.
 
@@ -254,15 +289,15 @@ URL patterns for all views and API routs.
 
 ### **Templates**
 
-#### **Layout.html**
+#### **[Layout.html](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/templates/carhire/layout.html)**
 
-Includes links to bootstrap5, stylesheet and favicon, scripts to JSX/Babel, Bootstrap Javascript, React and my javascript files.
+Layout.html includes links to bootstrap5, stylesheet and favicon, scripts to JSX/Babel, Bootstrap Javascript, React and my javascript files.
 
 Nav bar and search bar in the body.
 
-#### **Index.html**
+#### **[Index.html](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/templates/carhire/index.html)**
 
-Extends layout.html.
+Index.html extends layout.html.
 Sections include:
 
 * messages - Where error and conformation messages are rendered
@@ -271,11 +306,11 @@ Sections include:
 * main section - Where main content is rendered
 * Select_car - Where search results and selected car summary is rendered
 
-### **static/react/src**
+### **[static/react/src](https://github.com/SailorGirl1234/CAPSTONE-CarHire/tree/main/carhire/static/carhire/react/src)**
 
-React files written and saved in static/react/src are compiled and saved in static/react.
+React files written and saved in static/react/src are compiled using Babel and are saved in static/react.
 
-#### **index.js**
+#### **[index.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/index.js)**
 
 Sets event listeners, shows/hived various sections, changes active links in nav bar, updates min and max values for pickup and dropoff date/times in search date-pickers.
 
@@ -283,7 +318,11 @@ getCookie function from Django documentation, retrieves a cookie by name. Used t
 
 cancel_booking function sends AJAX get request to cancel a booking using the booking id and a parameter in the URL.
 
-#### **all_locations.js**
+#### **[home.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/home.js)**
+
+index_page() displays the landing page with two cards for content.
+
+#### **[all_locations.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/all_locations.js)**
 
 show_locations() fetches an AJAX GET request with the location code as a URL parameter.
 
@@ -291,45 +330,45 @@ It uses the result to ReactDOM.render location details in the main section. If t
 
 Window history is also updated using history.pushstate.
 
-#### **e-cars.js**
+#### **[e-cars.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/e-cars.js)**
 
 all_cars() fetches a GET request and renders a list of all the carTypes and their details. It then updates the window history.
 
-#### **login.js**
+#### **[login.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/login.js)**
 
 login(), register() and update_user() all use AJAX PUSH requests, with the csrf token added to the request the headers. Any resulting error messages are displayed using error_message() function. If there are no errors the page is then refreshed for the login and register functions.
 
-#### **error_message.js**
+#### **[error_message.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/error_message.js)**
 
 Displays any messages sent as props in the "messages" div on the index page.
 
-#### **search.js**
+#### **[search.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/search.js)**
 
 Uses data from either the search form or if from a onpopstate event, uses history.state to populate a AJAX POST after several validation checks. Uses the result to render a list of the cars available for the search.
 
 History is updated using pushState or replaceState depending on the previous history state.
 
-#### **select_car.js**
+#### **[select_car.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/select_car.js)**
 
 Sends AJAX POST request with csrf token in the header and uses the results to render carType and booking specific data.
 
 If user is logged in, shows a "book car" button, else shows the login/register section.
 
-#### **book_car.js**
+#### **[book_car.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/book_car.js)**
 
 Sends 2 AJAX POST requests, one to book the car, the second to get and then render the booking confirmation page via the booking_summary() function. Both send the csrf token in the request header.
 
 The booking_summary() displays a success message if it is passed via book_car().
 
-#### **profile.js**
+#### **[profile.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/profile.js)**
 
 Sends an AJAX GET request and uses the results to render the main profile page and a list of bookings made by the user.
 
-#### **history.js**
+#### **[history.js](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/react/src/history.js)**
 
 Popstate event listener and function to direct to correct function in order to load content depending on the stateObject page title.
 
-### **static/style.sass**
+### **[static/style.sass](https://github.com/SailorGirl1234/CAPSTONE-CarHire/blob/main/carhire/static/carhire/style.scss)**
 
 SASS style sheet compiled to style.scc.
 Contains styles used and color variables.
@@ -337,18 +376,6 @@ Contains styles used and color variables.
 ### **db.sqlite3**
 
 Database populated with some data. Cars only populated for City Airport and Gatwick Airport locations.
-
-## **How to run the application**
-
-The application can be run on Django's development server using manage.py runserver.
-
-The main requirement is Django (3.2.5). The pytz library is also used.
-
-Node.js was used to install Babel to compile the react documents and Live SASS Compiler was used to compile the SASS file to CSS.
-
-## **Additional information**
-
-The database has been populated with 3 locations, 12 car types and 24 cars (one of each type at 2 locations). One location was intentionally left without any cars assigned to simulate no cars being available.
 
 ### **Future development**
 
