@@ -93,7 +93,7 @@ Clone the project
 
     git clone https://github.com/SailorGirl1234/CAPSTONE-CarHire.git
 
-Create and start a a virtual environment
+Create and start a virtual environment
 
     virtualenv env --no-site-packages
     source env/bin/activate
@@ -118,9 +118,15 @@ From the root directory run:
     python3 manage.py makemigrations
     python3 manage.py migrate
 
-The application can be run on Django's development server using:
+A superuser can be created in order to access the database admin:
+
+    python manage.py createsuperuser
+
+Start Django's development server:
 
     python3 manage.py runserver
+
+Open localhost:8000 on your browser to view the app.
 
 ### **Additional information**
 
