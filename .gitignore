@@ -6,10 +6,7 @@ __pycache__
 db.sqlite3
 media
 local_settings.py
-carhire/static/carhire/images
-*.ico 
 comandline.txt
-carhire/static/carhire/react/*.js
 
 
 # Backup files # 

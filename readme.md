@@ -4,7 +4,7 @@
 
 ## **Description**
 
-**CAPSTONE E-Car Hire** 
+**CAPSTONE E-Car Hire**
 is a car hire booking system, that checks the availability and handles the booking of cars within a fleet, distributed across several locations.
 
 It is a single page, responsive web app, designed using React/Javascript alongside AJAX requests sent to the Django back end, so that the page is dynamically updated and only reloads when necessary
@@ -25,7 +25,6 @@ To build the web app I used the following languages, frameworks and libraries:
 * HTML
 * SASS
 * SQLite Database
-
 
 ### **Using the web app**
 
@@ -50,7 +49,6 @@ Using the dropdown menu, you can access information about each car hire site, or
 The login/register button in the nav bar shows the login/register section above any other content. The section can be hidden by clicking the "x" in the top right of the section.
 
 #### **Search bar**
-
 
 The search bar can be used from all sections of the web app.
 The location is selected from a dropdown of available locations. While the "To" and "From" date-times are set using date pickers.
@@ -99,20 +97,20 @@ Create and start a a virtual environment
 
     virtualenv env --no-site-packages
     source env/bin/activate
-    
+
 Install the project dependencies:
 
     pip install -r requirements.txt
 
 Run using python3 in your terminal:
-    
+
     from django.core.management.utils import get_random_secret_key
     SECRET_KEY = get_random_secret_key()
     print(SECRET_KEY)
 
 Create a new file called "local_settings.py" in /capstone.
 Create a constant with the value of your secret key:
-    
+
     DJANGO_SECRET_KEY = 'django-insecure-*YOUR SECRET KEY*'
 
 From the root directory run:
@@ -121,7 +119,7 @@ From the root directory run:
     python3 manage.py migrate
 
 The application can be run on Django's development server using:
-    
+
     python3 manage.py runserver
 
 ### **Additional information**
