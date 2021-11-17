@@ -126,7 +126,7 @@ Start Django's development server:
 
     python3 manage.py runserver
 
-Open localhost:8000 on your browser to view the app.
+Open localhost:8000 on your browser to view the app, localhost:8000/admin alows you to view the database admin.
 
 ### **Additional information**
 
