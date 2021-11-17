@@ -1,6 +1,6 @@
 # **CAPSTONE E-Car Hire**
 
-## **Video Demo:** [https://youtu.be/UupEu_e38s0](<https://youtu.be/UupEu_e38s0>)
+## **Video Demo:**  <https://youtu.be/UupEu_e38s0>
 
 ## **Description**
 
